@@ -261,6 +261,7 @@ div.title a {
 .blog-container .index-btns {
 	width: 500px;
 	margin:auto;
+    margin-left: 520px;
 	margin-top: 40px;
 	overflow: hidden;
 }

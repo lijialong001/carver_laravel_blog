@@ -5,11 +5,10 @@
 			</div>
 			<ul>
 				<li v-for="vo,i in nav" @mouseenter="onAn(i)" @mouseleave="onAn(i)" :class="{ active: active(vo.url) }">
-					<router-link :to="vo.url"   :key="i">
-						{{vo.name}}
+          <router-link :to="vo.url"   :key="i">
+            {{vo.name}}
 						<i v-if="vo.list" class="iconfont">&#xe620;</i>
 					</router-link>
-
 
 					<el-collapse-transition>
 						<div v-if="vo.list && vo.an">
@@ -17,6 +16,7 @@
 						</div>
 					</el-collapse-transition>
 				</li>
+
 			</ul>
 		</div>
 	</el-header>
@@ -24,7 +24,7 @@
 
 <script>
 	export default {
-		props: ['nav','ShowHeader'],
+		props: ['nav','ShowHeader','init'],
 		data() {
 			return {
 
@@ -38,6 +38,7 @@
 			window.addEventListener('scroll',this.handleScroll)
 		},
 		methods: {
+
 			active: function(e) {
 				if(this.$route.path == e) {
 					return true;

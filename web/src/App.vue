@@ -98,25 +98,30 @@
         this.host = "http://api.blog.lijialong.site"; //正式上线
       }
 
-			if(sessionStorage.init){
+
+      //初始化本地的缓存数据【存在缓存】
+      if(sessionStorage.init){
+
         setTimeout(function () {
           self.show = true; //重新加载,延时一秒
         },1000)
-				self.init = JSON.parse(sessionStorage.init);
-			}else{
-				//加载初始数据
-				this.gets({url:'/api/index.html',success:function(e){
+          self.init = JSON.parse(sessionStorage.init);
+        console.log(self.init)
+
+      }else{
+          //加载初始数据【不存在缓存】
+          this.gets({url:'/api/index.html',success:function(e){
 					if(e.status==200){
 						self.show = true;
 						self.init = e.data;
-						sessionStorage.init = JSON.stringify(e.data);
+						sessionStorage.init = JSON.stringify(e.data);//保存一份到缓存
 					}else{
 						self.$message.error('服务器异常~');
 					}
 				},error:function(e){
 					self.$message.error('服务器异常~');
 				}});
-			}
+      }
 
 			//切换浏览器标签 切换标题
 			var hiddenProperty = 'hidden' in document ? 'hidden' :
@@ -133,7 +138,7 @@
 				}else{
 					var a = false;
 					Tiao = setInterval(function(){
-						document.title = a ? "千万别走,BUG出现~" : "➟千万别走,BUG出现~";
+						document.title = a ? "千万别走,主人来电话了" : "➟千万别走,主人来电话了~";
 						a = !a;
 					},50);
 				}
@@ -193,21 +198,22 @@
 					}
 				},1)
 			},
-			//封装ajax get请求
-      gets:function({url,success,error}){
-        this.$http.get(this.host+url).then(success).catch(error);
-      },
-      //封装ajax post请求
-      posts:function({url,data,success,error}){
 
-        this.$http({
-          method: 'post',
-          url: this.host+url,
-          data: this.$qs.stringify(data)
-        }).then(success).catch(error);
+            //封装ajax get请求
+            gets:function({url,success,error}){
+                this.$http.get(this.host+url).then(success).catch(error);
+            },
 
-        //this.$http.post(this.host+url,data).then(success).catch(error);
-      }
+            //封装ajax post请求
+            posts:function({url,data,success,error}){
+                this.$http({
+                  method: 'post',
+                  url: this.host+url,
+                  data: this.$qs.stringify(data)
+                }).then(success).catch(error);
+
+                //this.$http.post(this.host+url,data).then(success).catch(error);
+            }
 		},
 
 

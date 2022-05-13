@@ -6,9 +6,9 @@
 				<h1 class="blog-name">{{init.info.nick || init.info.name}}<p style="font-size: 16px; color:#666">全栈开发工程师</p></h1>
 				<p class="blog-description" v-html="init.info.desc"> </p>
 				<div class="index-btns">
-					<a target="_blank" :href="init.info.github" class="index-btns-btn">
-						<i class="iconfont">&#xeee2;</i> GitHub
-					</a>
+<!--					<a target="_blank" :href="init.info.github" class="index-btns-btn">-->
+<!--						<i class="iconfont">&#xee   e2;</i> GitHub-->
+<!--					</a>-->
 					<router-link to="/article" class="index-btns-btn">进入博客</router-link>
 				</div>
 			</div>
