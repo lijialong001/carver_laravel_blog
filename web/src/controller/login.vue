@@ -3,25 +3,36 @@
         <!--fixed-->
         <div class="background-fixed">
             <div class="blog-container">
-                <h1 class="blog-name">{{init.info.nick || init.info.name}}<p style="font-size: 16px; color:#666">Carver登录～</p></h1>
+                <h1 class="blog-name">{{init.info.nick || init.info.name}}<p style="font-size: 16px; color:#666">欢迎使用Carver博客</p></h1>
 
-                <div class="index-btnss">
-                    <!--用户登录-->
-                    <el-form ref="form"  label-width="200px">
-                        <el-form-item label="用户名">
-                            <el-input  type="number" v-model="user.phone" maxlength="2" placeholder="请输入您的账号/手机号哦" ></el-input>
-                        </el-form-item>
-                        <el-form-item label="密码">
-                            <el-input  v-model="user.pwd" type="password"  placeholder="请输入您的密码" ></el-input>
-                        </el-form-item>
-                        <el-form-item style="margin: 0">
-                            <el-button type="primary" style="width: 70px" @click="userPost">登录</el-button>
-                            <el-button type="primary" style="width: 70px" @click="userPost">注册</el-button>
-                            <el-button type="primary" style="width: 100px" @click="userPost">忘记密码</el-button>
-                        </el-form-item>
-                    </el-form>
-
+                <div v-if="login!==false">
+                    <div class="index-btns">
+                        <router-link to="/article" class="index-btns-btn">进入博客</router-link>
+                    </div>
                 </div>
+
+                <div v-if="login===false">
+                    <div class="index-btnss">
+                        <!--用户登录-->
+                        <el-form ref="form"  label-width="200px">
+                            <el-form-item label="用户名">
+                                <el-input  type="text" v-model="user.account" placeholder="请输入您的账号哦" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="密码">
+                                <el-input  v-model="user.pwd" type="password"  placeholder="请输入您的密码" ></el-input>
+                            </el-form-item>
+                            <el-form-item style="margin: 0">
+                                <el-button type="primary" style="width: 70px" @click="userLogin">登录</el-button>
+                                <el-button type="primary" style="width: 70px" @click="userRegister">注册</el-button>
+                                <el-button type="primary" style="width: 100px" @click="userForget">忘记密码</el-button>
+                            </el-form-item>
+                        </el-form>
+
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
 
@@ -35,12 +46,11 @@ export default {
     data() {
         return {
             user:{
-                phone:"",
-                pwd:"",
-                repwd:"",
-                email:"",
-                show:false,
+                account:"",
+                pwd:'',
+                show:false
             },
+            login:sessionStorage.login?sessionStorage.login:false
         }
     },
     created(){
@@ -48,7 +58,59 @@ export default {
         this.$emit("SetScrollTop");
         sessionStorage['title'] = document.title = "登录 - "+(this.init.info.nick || this.init.info.name)+ "的博客"
 
+    },
+    methods:{
+        isUser:function () {
+            if(this.user.account.length>0  && this.user.pwd.length>0){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        //登录
+        userLogin:function () {
+            var _self=this;
+            if(!this.isUser()){
+                this.$message.error('信息未填写完整');
+                return;
+            }
+
+            this.$emit("posts",{
+                url:'/api/index/',
+                data:{
+                    account:this.user.account,
+                    pwd:this.user.pwd,
+                },
+                success:function(e){
+                    sessionStorage.login=false;
+                    if(e.status==200){
+                        if(e.data.code==1){
+                            _self.$message.success("登录成功");
+                            sessionStorage.login=true;
+                            sessionStorage.alluserinfo=JSON.stringify(e.data);
+                            window.location.href='/';
+                        }else{
+                            _self.$message.error(e.data.msg);
+                        }
+                    }else{
+                        _self.$message.error('服务器异常 状态码' + e.status);
+                    }
+                },error:function (e){
+                    sessionStorage.login=false;
+                    _self.$message.error('服务器异常');
+                }});
+
+        },
+        //注册
+        userRegister:function (){
+
+        },
+        //忘记密码
+        userForget:function (){
+
+        }
     }
+
 }
 </script>
 

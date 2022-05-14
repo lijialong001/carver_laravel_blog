@@ -457,6 +457,7 @@ div.title a {
 
 .article-list{
 	min-height: 500px;
+    width: 100%;
 }
 
 .article-list .li {

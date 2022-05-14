@@ -1,33 +1,62 @@
 <template>
 	<el-header :class="{'el-header2':ShowHeader}">
-		<div class="container">
-			<div :class="{logo:true,logo2:ShowHeader}">
-			</div>
-			<ul>
-				<li v-for="vo,i in nav" @mouseenter="onAn(i)" @mouseleave="onAn(i)" :class="{ active: active(vo.url) }">
-          <router-link :to="vo.url"   :key="i">
-            {{vo.name}}
-						<i v-if="vo.list" class="iconfont">&#xe620;</i>
-					</router-link>
+		<div class="container bodyinfo" >
+			<div :class="{logo:true,logo2:ShowHeader}" class="leftTop"></div>
 
-					<el-collapse-transition>
-						<div v-if="vo.list && vo.an">
-							<router-link v-for="vo2,i in vo.list" :to="vo2.url" :key="i">{{vo2.name}}</router-link>
-						</div>
-					</el-collapse-transition>
-				</li>
+            <el-row :gutter="20" >
+                <el-col :span="9" v-if="this.$route.path.match(/info|leave/)===null" class="middleTop">
+                    <div class="grid-content bg-purple">
+                        <el-tabs @tab-click="handleClick">
+                            <el-tab-pane v-if="vo.user===false" :label="vo.name" :redirecturl="vo.url" v-for="vo,i in nav" @mouseenter="onAn(i)" @mouseleave="onAn(i)" :class="{ active: active(vo.url) }">
+                            </el-tab-pane>
+                        </el-tabs>
+                    </div>
+                </el-col>
 
-			</ul>
+                <el-col :span="5">
+                    <div class="grid-content bg-purple rightTop">
+                        <el-dropdown trigger="click" class="selfUser">
+                          <span class="el-dropdown-link">
+                              <span v-for="vo,i in nav" v-if="vo.login !==false && vo.user">
+                                    {{vo.name}}
+                              </span>
+                              <span v-for="vo,i in nav" v-if="vo.login ===false && vo.user">
+                                    <router-link to="/login"   class="index-btns-btn">请登录</router-link>
+                              </span>
+<!--                              <i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>-->
+                          </span>
+                            <el-dropdown-menu slot="dropdown"  v-for="vo,i in nav" v-if="vo.login !==false && vo.user">
+                                <el-dropdown-item>
+                                    <router-link to="/"    class="index-btns-btn">首页</router-link>
+                                </el-dropdown-item>
+                                <el-dropdown-item>
+                                    <router-link to="/info"   class="index-btns-btn">个人中心</router-link>
+                                </el-dropdown-item>
+                                <el-dropdown-item>
+                                    <router-link to="/leave"    class="index-btns-btn">发布博客</router-link>
+                                </el-dropdown-item>
+                                <el-dropdown-item >
+                                    <div @click="outLogin">退出登录</div>
+<!--                                    <router-link to="/"    class="index-btns-btn" @click="outLogin">退出登录</router-link>-->
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
+                </el-col>
+            </el-row>
+
 		</div>
 	</el-header>
 </template>
 
+
 <script>
-	export default {
-		props: ['nav','ShowHeader','init'],
+
+export default {
+		props: ['nav','ShowHeader','init','login'],
 		data() {
 			return {
-
+                activeIndex: '1',
 			}
 		},
 		computed: {
@@ -38,6 +67,31 @@
 			window.addEventListener('scroll',this.handleScroll)
 		},
 		methods: {
+
+            handleClick(tab, event) {
+                this.$router.push({path: tab.$attrs.redirecturl})
+            },
+
+            outLogin:function (e){
+                this.$confirm('此操作将注销登录, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    sessionStorage.removeItem("login")
+                    this.$router.push('/login')
+                    this.$router.go(0);
+                    location.reload();
+
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消操作'
+                    });
+                });
+                // this.$router.push({path: "/"})
+            },
+
 
 			active: function(e) {
 				if(this.$route.path == e) {
@@ -172,6 +226,82 @@
 	.el-header2 ul li div a:hover {
 		background-color: rgba(100, 100, 100, 0.2);
 	}
+
+    .el-dropdown-link {
+        cursor: pointer;
+        font-size: 22px;
+    }
+    .el-icon-arrow-down {
+        font-size: 12px;
+    }
+
+
+    .el-tabs__item{
+        width: 200px;
+        height: 80px;
+        padding: 0;
+        text-align: center;
+        line-height: 80px;
+        font-size: 20px;
+        color: gray;
+        border-radius: 40px;
+    }
+
+    /*.el-tabs__item.is-active{*/
+    /*    color: #ffffff;*/
+    /*    background: linear-gradient(45deg, #DD2E9B 0%, #F47039 99%);*/
+    /*}*/
+    .el-tabs__nav-wrap::after {
+        position: static !important;
+    }
+
+    /*.el-tabs__active-bar{*/
+    /*    display: none;*/
+    /*}*/
+
+
+
+    .bodyinfo{
+        width: 100%;
+    }
+
+    .el-header .logo2{
+        height: 70px;
+        width: 400px;
+    }
+
+    .el-header .logo{
+        height: 70px;
+        width: 400px;
+    }
+
+    .middleTop{
+        height: 70px;
+        width: 450px;
+    }
+
+    .rightTop{
+        height: 70px;
+        width: 375px;
+        margin-right: 0px;
+        position: absolute;
+        top: 9px;
+        right: 0px;
+    }
+
+    .selfUser {
+        float: right;
+        padding-right: 40px;
+    }
+
+
+
+
+
+
+
+
+
 
 
 </style>

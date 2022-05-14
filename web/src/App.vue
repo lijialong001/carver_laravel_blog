@@ -42,18 +42,20 @@
 				ShowHeader: false, //导航切换
 				top: false, //返回顶部
 				init:{},
+                login:false,
 				nav: [
 					// {name:"更多",url:"/about",an:false,list:[
 					// 	{name:"友情链接",url:"/info"},
 					// ]},
-                    {name:"登录",url:"/login"},
-					{name:"关于我",url:"/info"},
-					{name:"动态",url:"/leave"},
+
+					// {name:"关于我",url:"/info"},
+					// {name:"动态",url:"/leave"},
 					// {name:"作品",url:"/works"},
 					// {name:"实验室",url:"/experiment"},
 					// {name:"归档",url:"/archive"},
-					{name:"博文",url:"/article"},
-					{name:"首页",url:"/",active:true}
+					{name:"首页",url:"/",active:true,user:false},
+                    {name:"博客",url:"/article",user:false},
+                    {name:sessionStorage.login?JSON.parse(sessionStorage.init).info.name:'请登录',url:"/login",user:true,login:sessionStorage.login?sessionStorage.login:false},
 				],
 				keys:{
 					list:[
@@ -65,7 +67,7 @@
 					],
 					i:0
 				},
-        isMobile:false
+                isMobile:false
 			};
 		},
 		created: function(){
@@ -89,13 +91,13 @@
 
 
 
-			var self = this;
+	  var self = this;
 
       //api根地址
       if(document.domain=="127.0.0.1" || document.domain=="blog.lijialong.site"){ //webpack环境下
         this.host = "http://api.blog.lijialong.site";
       }else{
-        this.host = "http://api.blog.lijialong.site"; //正式上线
+        this.host = "http://test.lijialong.site"; //正式上线
       }
 
 
@@ -106,15 +108,17 @@
           self.show = true; //重新加载,延时一秒
         },1000)
           self.init = JSON.parse(sessionStorage.init);
-        console.log(self.init)
 
       }else{
           //加载初始数据【不存在缓存】
           this.gets({url:'/api/index.html',success:function(e){
+
 					if(e.status==200){
 						self.show = true;
 						self.init = e.data;
 						sessionStorage.init = JSON.stringify(e.data);//保存一份到缓存
+                        sessionStorage.login=true;
+
 					}else{
 						self.$message.error('服务器异常~');
 					}
