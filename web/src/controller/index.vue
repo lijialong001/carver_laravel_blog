@@ -3,7 +3,7 @@
 		<!--fixed-->
 		<div class="background-fixed">
 			<div class="blog-container">
-				<h1 class="blog-name">{{init.info.nick || init.info.name}}<p style="font-size: 16px; color:#666">全栈开发工程师</p></h1>
+				<h1 class="blog-name">{{init.info.nick || init.info.name}}<p style="font-size: 16px; color:#666">懂得放下～</p></h1>
 				<p class="blog-description" v-html="init.info.desc"> </p>
 				<div class="index-btns">
 <!--					<a target="_blank" :href="init.info.github" class="index-btns-btn">-->

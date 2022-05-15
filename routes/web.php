@@ -18,4 +18,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 use App\Http\Controllers\UserController;
-Route::post('api/index',[UserController::class,'index']);
+Route::post('api/login',[UserController::class,'login']);

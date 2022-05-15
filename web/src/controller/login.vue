@@ -2,6 +2,7 @@
     <div class="container-index">
         <!--fixed-->
         <div class="background-fixed">
+
             <div class="blog-container">
                 <h1 class="blog-name">{{init.info.nick || init.info.name}}<p style="font-size: 16px; color:#666">欢迎使用Carver博客</p></h1>
 
@@ -11,7 +12,8 @@
                     </div>
                 </div>
 
-                <div v-if="login===false">
+                <!--登录-->
+                <div v-if="login===false" class="loginbtn">
                     <div class="index-btnss">
                         <!--用户登录-->
                         <el-form ref="form"  label-width="200px">
@@ -30,6 +32,30 @@
 
                     </div>
                 </div>
+
+                    <div class="index-btnss registerbtn" style="display: none">
+                        <!--用户登录-->
+                        <el-form ref="form"  label-width="200px">
+                            <el-form-item label="手机号">
+                                <el-input  type="text" v-model="user.account" placeholder="请输入您的手机号" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="验证码">
+                                <el-input  v-model="user.captcha" type="text"  placeholder="请输入您的手机验证码" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="密码">
+                                <el-input  v-model="user.pwd" type="password"  placeholder="请输入您的密码" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="确认密码">
+                                <el-input  v-model="user.pwd" type="password"  placeholder="请输入您的确认密码" ></el-input>
+                            </el-form-item>
+                            <el-form-item style="margin: 0">
+                                <el-button type="primary" style="width: 83px" @click="goLogin">去登录？</el-button>
+                                <el-button type="primary" style="width: 94px" @click="doRegister">确认提交</el-button>
+                            </el-form-item>
+                        </el-form>
+
+                    </div>
+
 
 
 
@@ -76,7 +102,7 @@ export default {
             }
 
             this.$emit("posts",{
-                url:'/api/index/',
+                url:'/api/login/',
                 data:{
                     account:this.user.account,
                     pwd:this.user.pwd,
@@ -107,11 +133,17 @@ export default {
         },
         //注册
         userRegister:function (){
+            document.querySelector(".container-index .registerbtn").style.display='block';
+            document.querySelector(".container-index .loginbtn").style.display='none';
 
         },
         //忘记密码
         userForget:function (){
-
+            this.$message.error("暂时没有该功能哦");
+        },
+        goLogin:function (){
+            document.querySelector(".container-index .registerbtn").style.display='none';
+            document.querySelector(".container-index .loginbtn").style.display='block';
         }
     }
 
