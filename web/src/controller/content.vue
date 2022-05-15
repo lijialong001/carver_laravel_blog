@@ -86,7 +86,7 @@
 					uParse(".body", {rootPath: '../static/home/ueditor/'})
 				},500)
 			}else{
-				this.$emit("gets",{url:'/api/article/content.html?id='+id,success:function(e){
+				this.$emit("gets",{url:'/api/article/content?id='+id,success:function(e){
 					if(e.status==200){
 						self.show = true;
 						self.article = e.data;

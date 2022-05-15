@@ -17,5 +17,11 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-use App\Http\Controllers\UserController;
-Route::post('api/login',[UserController::class,'login']);
+Route::post('api/login',[\App\Http\Controllers\UserController::class,'login']);
+Route::get('api/index',[\App\Http\Controllers\IndexController::class,'index']);
+Route::get('api/article',[\App\Http\Controllers\ArticleController::class,'index']);
+Route::get('api/experiment',[\App\Http\Controllers\ArticleController::class,'experiment']);
+Route::get('api/article/content',[\App\Http\Controllers\ArticleController::class,'content']);
+Route::get('api/article/a',[\App\Http\Controllers\ArticleController::class,'a']);
+Route::get('api/article/z',[\App\Http\Controllers\ArticleController::class,'z']);
+Route::get('api/publish/index',[\App\Http\Controllers\ArticleController::class,'publish']);

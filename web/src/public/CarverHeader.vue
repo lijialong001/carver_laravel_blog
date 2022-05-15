@@ -6,41 +6,47 @@
             <el-row :gutter="20" >
                 <el-col :span="9" v-if="this.$route.path.match(/info|leave/)===null" class="middleTop">
                     <div class="grid-content bg-purple">
-                        <el-tabs @tab-click="handleClick">
-                            <el-tab-pane v-if="vo.user===false" :label="vo.name" :redirecturl="vo.url" v-for="vo,i in nav" @mouseenter="onAn(i)" @mouseleave="onAn(i)" :class="{ active: active(vo.url) }">
+                        <el-tabs @tab-click="handleClick" >
+
+                            <el-tab-pane :label="vo.name" :redirecturl="vo.url" v-for="vo,i in nav" @mouseenter="onAn(i)" @mouseleave="onAn(i)" :class="{ active: active(vo.url) }">
                             </el-tab-pane>
+
                         </el-tabs>
                     </div>
                 </el-col>
 
                 <el-col :span="5">
+
                     <div class="grid-content bg-purple rightTop">
+                        <div v-if="this.logins === 'false'">
+                            <router-link to="/login"  class="index-btns-btn">请登录</router-link>
+                        </div>
+
                         <el-dropdown trigger="click" class="selfUser">
                           <span class="el-dropdown-link">
-                              <span v-for="vo,i in nav" v-if="vo.login !==false && vo.user">
-                                    {{vo.name}}
+                              <span v-if="this.logins === 'true'">
+                                  {{this.init.info.nick}}
                               </span>
-                              <span v-for="vo,i in nav" v-if="vo.login ===false && vo.user">
-                                    <router-link to="/login"   class="index-btns-btn">请登录</router-link>
-                              </span>
-<!--                              <i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>-->
                           </span>
-                            <el-dropdown-menu slot="dropdown"  v-for="vo,i in nav" v-if="vo.login !==false && vo.user">
-                                <el-dropdown-item>
-                                    <router-link to="/"    class="index-btns-btn">首页</router-link>
-                                </el-dropdown-item>
-                                <el-dropdown-item>
-                                    <router-link to="/info"   class="index-btns-btn">个人中心</router-link>
-                                </el-dropdown-item>
-                                <el-dropdown-item>
-                                    <router-link to="/leave"    class="index-btns-btn">发布博客</router-link>
-                                </el-dropdown-item>
-                                <el-dropdown-item >
-                                    <div @click="outLogin">退出登录</div>
-<!--                                    <router-link to="/"    class="index-btns-btn" @click="outLogin">退出登录</router-link>-->
-                                </el-dropdown-item>
-                            </el-dropdown-menu>
+                                <el-dropdown-menu slot="dropdown">
+
+                                    <el-dropdown-item>
+                                        <router-link to="/"    class="index-btns-btn">首页</router-link>
+                                    </el-dropdown-item>
+                                    <el-dropdown-item>
+                                        <router-link to="/info"   class="index-btns-btn">个人中心</router-link>
+                                    </el-dropdown-item>
+                                    <el-dropdown-item>
+                                        <router-link to="/publish"    class="index-btns-btn">发布文章</router-link>
+                                    </el-dropdown-item>
+                                    <el-dropdown-item >
+                                        <div @click="outLogin">退出登录</div>
+    <!--                                    <router-link to="/"    class="index-btns-btn" @click="outLogin">退出登录</router-link>-->
+                                    </el-dropdown-item>
+
+                                </el-dropdown-menu>
                         </el-dropdown>
+
                     </div>
                 </el-col>
             </el-row>
@@ -53,10 +59,11 @@
 <script>
 
 export default {
-		props: ['nav','ShowHeader','init','login'],
+		props: ['nav','ShowHeader','init'],
 		data() {
 			return {
                 activeIndex: '1',
+                logins:sessionStorage.login?sessionStorage.login:'false',
 			}
 		},
 		computed: {
@@ -70,7 +77,9 @@ export default {
 
             handleClick(tab, event) {
                 this.$router.push({path: tab.$attrs.redirecturl})
+
             },
+
 
             outLogin:function (e){
                 this.$confirm('此操作将注销登录, 是否继续?', '提示', {
@@ -78,7 +87,8 @@ export default {
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    sessionStorage.removeItem("login")
+                    sessionStorage.clear();
+                    sessionStorage.login=false;
                     this.$message({
                         message: '退出成功～',
                         type: 'success'

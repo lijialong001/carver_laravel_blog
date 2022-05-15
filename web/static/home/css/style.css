@@ -164,7 +164,7 @@ h5 {
 }
 
 .container {
-	width: 1200px;
+	width: 90%;
 	margin: 0 auto;
 }
 
@@ -663,6 +663,7 @@ div.title a {
 
 .leave {
 	padding: 20px;
+    height: 500px;
 	background-color: rgba(255, 255, 255, 0.5);
 	overflow: hidden;
 	-webkit-box-shadow: 0px 0px 15px #ccc;
@@ -688,7 +689,7 @@ div.title a {
   border: solid 1px #dcdfe6;
   border-radius: 5px;
   padding: 10px;
-  height: 150px;
+  height: 400px;
   margin-bottom: 15px;
   overflow: auto;
 }

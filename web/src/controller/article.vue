@@ -129,7 +129,7 @@
 					self.hot = data.hot;
 					self.page.count = data.count;
 				}else{
-					this.$emit("gets",{url:'/api/article.html?t='+this.t+'&p='+p,success:function(e){
+					this.$emit("gets",{url:'/api/article?t='+this.t+'&p='+p,success:function(e){
 						if(e.status==200){
 							self.show = true;
 							self.list = e.data.data;

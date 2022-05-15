@@ -2,18 +2,16 @@
     <div class="container-index">
         <!--fixed-->
         <div class="background-fixed">
-
             <div class="blog-container">
                 <h1 class="blog-name">{{init.info.nick || init.info.name}}<p style="font-size: 16px; color:#666">欢迎使用Carver博客</p></h1>
-
-                <div v-if="login!==false">
+                <div v-if="user.login!=='false'">
                     <div class="index-btns">
                         <router-link to="/article" class="index-btns-btn">进入博客</router-link>
                     </div>
                 </div>
 
                 <!--登录-->
-                <div v-if="login===false" class="loginbtn">
+                <div v-if="user.login==='false'" class="loginbtn">
                     <div class="index-btnss">
                         <!--用户登录-->
                         <el-form ref="form"  label-width="200px">
@@ -34,7 +32,7 @@
                 </div>
 
                     <div class="index-btnss registerbtn" style="display: none">
-                        <!--用户登录-->
+                        <!--用户注册-->
                         <el-form ref="form"  label-width="200px">
                             <el-form-item label="手机号">
                                 <el-input  type="text" v-model="user.account" placeholder="请输入您的手机号" ></el-input>
@@ -56,15 +54,22 @@
 
                     </div>
 
-
-
-
             </div>
         </div>
 
+        <div class="container-body">
+        </div>
+        <!--关于我-->
+        <div class="container-about">
+            <h1>欢迎使用Carver交流平台</h1>
+            <span>欢迎 {{init.info.nick}} ~</span>
+
+        </div>
 
     </div>
 </template>
+
+
 
 <script>
 export default {
@@ -74,9 +79,11 @@ export default {
             user:{
                 account:"",
                 pwd:'',
-                show:false
+                captcha:'',
+                show:false,
+                login:sessionStorage.login?sessionStorage.login:'false'
             },
-            login:sessionStorage.login?sessionStorage.login:false
+
         }
     },
     created(){
@@ -109,8 +116,8 @@ export default {
                 },
                 success:function(e){
                     sessionStorage.login=false;
-                    if(e.status==200){
-                        if(e.data.code==1){
+                    if(e.data.status==200){
+                        if(e.data.data.code==1){
                             _self.$message({
                                 message: '登录成功～',
                                 center: true,
@@ -120,14 +127,24 @@ export default {
                             sessionStorage.alluserinfo=JSON.stringify(e.data);
                             window.location.href='/';
                         }else{
-                            _self.$message.error(e.data.msg);
+                            _self.$message.error(e.data.data.msg);
                         }
                     }else{
-                        _self.$message.error('服务器异常 状态码' + e.status);
+                        _self.$message({
+                            message: e.data.data.msg,
+                            center: true,
+                            type: 'warning'
+                        });
                     }
                 },error:function (e){
+
                     sessionStorage.login=false;
-                    _self.$message.error('服务器异常');
+                    _self.$message({
+                        message: "服务器异常",
+                        center: true,
+                        type: 'error'
+                    });
+
                 }});
 
         },
@@ -139,11 +156,18 @@ export default {
         },
         //忘记密码
         userForget:function (){
-            this.$message.error("暂时没有该功能哦");
+            this.$message({
+                message: "暂时未开发该功能",
+                center: true,
+                type: 'warning'
+            });
         },
         goLogin:function (){
             document.querySelector(".container-index .registerbtn").style.display='none';
             document.querySelector(".container-index .loginbtn").style.display='block';
+        },
+        doRegister:function (e){
+
         }
     }
 

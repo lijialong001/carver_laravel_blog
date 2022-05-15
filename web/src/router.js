@@ -9,6 +9,7 @@ import info from './controller/info'
 import works from './controller/works'
 import content from './controller/content'
 import login from './controller/login'
+import publish from './controller/publish'
 
 Vue.use(Router)
 
@@ -50,14 +51,15 @@ export default new Router({
 		},{
 			path: "/content/:id",
 			name: '文章内容',
-            meta: {
-                needLogin: true //需要加校检判断的路由
-            },
 			component: content
 		}, {
             path: "/login",
             name: '登录',
             component: login
+        }, {
+            path: "/publish",
+            name: "发布文章",
+            component: publish
         }
 	]
 })

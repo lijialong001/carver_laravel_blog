@@ -6,7 +6,7 @@
 		@click="floating">
 
 		<!--头部-->
-		<CarverHeader v-if="show" :nav="nav" :ShowHeader="ShowHeader" @SetHeader="set_header"  @scrollTop="set_scrollTop" ></CarverHeader>
+		<CarverHeader v-if="show" :init="init" :nav="nav" :ShowHeader="ShowHeader"  @SetHeader="set_header"  @scrollTop="set_scrollTop" ></CarverHeader>
 
         <!--主体~路由-->
 		<transition name="el-fade-in"> <!-- 动画效果 -->
@@ -42,7 +42,6 @@
 				ShowHeader: false, //导航切换
 				top: false, //返回顶部
 				init:{},
-                login:false,
 				nav: [
 					// {name:"更多",url:"/about",an:false,list:[
 					// 	{name:"友情链接",url:"/info"},
@@ -54,8 +53,7 @@
 					// {name:"实验室",url:"/experiment"},
 					// {name:"归档",url:"/archive"},
 					{name:"首页",url:"/",active:true,user:false},
-                    {name:"博客",url:"/article",user:false},
-                    {name:sessionStorage.login?JSON.parse(sessionStorage.init).info.name:'请登录',url:"/login",user:true,login:sessionStorage.login?sessionStorage.login:false},
+                    {name:"博客",url:"/article",user:false}
 				],
 				keys:{
 					list:[
@@ -78,10 +76,10 @@
           isIphone = ipad || ua.match(/(iPhone\sOS)\s([\d_]+)/),
           isAndroid = ua.match(/(Android)\s+([\d.]+)/),
           isMobile = isIphone || isAndroid;
-      if(isMobile){
-        // this.loading = "请使用电脑访问~"
-        return;
-      }
+          // if(isMobile){
+          //   // this.loading = "请使用电脑访问~"
+          //   return;
+          // }
 
 
       if (!!window.ActiveXObject || "ActiveXObject" in window) {
@@ -103,7 +101,6 @@
 
       //初始化本地的缓存数据【存在缓存】
       if(sessionStorage.init){
-
         setTimeout(function () {
           self.show = true; //重新加载,延时一秒
         },1000)
@@ -111,13 +108,12 @@
 
       }else{
           //加载初始数据【不存在缓存】
-          this.gets({url:'/api/index.html',success:function(e){
+          this.gets({url:'/api/index',success:function(e){
 
 					if(e.status==200){
 						self.show = true;
 						self.init = e.data;
 						sessionStorage.init = JSON.stringify(e.data);//保存一份到缓存
-                        sessionStorage.login=true;
 
 					}else{
 						self.$message.error('服务器异常~');
