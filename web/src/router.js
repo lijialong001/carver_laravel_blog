@@ -50,6 +50,9 @@ export default new Router({
 		},{
 			path: "/content/:id",
 			name: '文章内容',
+            meta: {
+                needLogin: true //需要加校检判断的路由
+            },
 			component: content
 		}, {
             path: "/login",

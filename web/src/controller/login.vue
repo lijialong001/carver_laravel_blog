@@ -24,7 +24,7 @@
                             <el-form-item style="margin: 0">
                                 <el-button type="primary" style="width: 70px" @click="userLogin">登录</el-button>
                                 <el-button type="primary" style="width: 70px" @click="userRegister">注册</el-button>
-                                <el-button type="primary" style="width: 100px" @click="userForget">忘记密码</el-button>
+                                <el-button type="primary" style="width: 100px" @click="userForget">忘记密码?</el-button>
                             </el-form-item>
                         </el-form>
 
@@ -71,7 +71,7 @@ export default {
         userLogin:function () {
             var _self=this;
             if(!this.isUser()){
-                this.$message.error('信息未填写完整');
+                this.$message.error('信息未填写完整～');
                 return;
             }
 
@@ -85,7 +85,11 @@ export default {
                     sessionStorage.login=false;
                     if(e.status==200){
                         if(e.data.code==1){
-                            _self.$message.success("登录成功");
+                            _self.$message({
+                                message: '登录成功～',
+                                center: true,
+                                type: 'success'
+                            });
                             sessionStorage.login=true;
                             sessionStorage.alluserinfo=JSON.stringify(e.data);
                             window.location.href='/';

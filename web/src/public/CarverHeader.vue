@@ -79,14 +79,20 @@ export default {
                     type: 'warning'
                 }).then(() => {
                     sessionStorage.removeItem("login")
+                    this.$message({
+                        message: '退出成功～',
+                        type: 'success'
+                    });
                     this.$router.push('/login')
                     this.$router.go(0);
                     location.reload();
 
+
                 }).catch(() => {
                     this.$message({
                         type: 'info',
-                        message: '已取消操作'
+                        center: true,
+                        message: '已取消操作～'
                     });
                 });
                 // this.$router.push({path: "/"})
