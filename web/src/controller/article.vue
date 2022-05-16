@@ -7,17 +7,16 @@
 					<!--文章列表-->
 					<el-row v-for="vo,i in list" class="li" :key="i">
 						<el-col :span="6">
-							<img :src="vo.pic" />
+							<img :src="vo.article_img" />
 						</el-col>
 						<el-col :span="18">
-							<router-link :to="'/content/'+vo.id"><h1 v-text="vo.title"></h1></router-link>
+							<router-link :to="'/content/'+vo.id"><h1 v-text="vo.article_title"></h1></router-link>
 							<p v-text="vo.desc"></p>
-							<div class="article-info"><router-link :to="'/article/t/'+vo.type" v-text="vo.typename"></router-link> <span v-text="vo.time"></span>
+							<div class="article-info"><router-link :to="'/content/'+vo.id" v-text="vo.article_desc"></router-link> <span v-text="vo.time"></span>
 
 							<span class="r">
-								<i class="iconfont" v-html="'&#xe68a;'+vo.a"></i>
-								<i class="iconfont" v-html="'&#xe681;'+vo.z"></i>
-								<i class="iconfont" v-html="'&#xe604;'+vo.p"></i>
+								<i class="iconfont" v-html="'&#xe68a;'+vo.look_num"></i>
+								<i class="iconfont" v-html="'&#xe681;'+vo.click_num"></i>
 							</span></div>
 						</el-col>
 					</el-row>
@@ -26,40 +25,9 @@
 						<el-pagination background :page-size="page.size" @current-change="getPage" layout="prev, pager, next"  :total="page.count"> </el-pagination>
 					</div>
 
-					<el-alert v-show="list.length==0" title="没有数据" type="info" description=" " :closable="false" show-icon></el-alert>
-
+					<el-alert v-show="list.length==0" title="没有更多数据" type="info" description=" " :closable="false" show-icon></el-alert>
 
 				</el-col>
-                <!--右侧标签暂时关闭【等待开发】-->
-<!--				<el-col :span="6">-->
-<!--					<div class="article-type article-r">-->
-<!--						<ul>-->
-<!--							<li v-for="vo,ik in init.category" :key="ik"><router-link :to="'/article/t/'+vo.id" :class="{active:vo.an}">{{vo.name}}</router-link>-->
-<!--								<ul v-if="vo.list">-->
-<!--									<li v-for="vo2,i in vo.list" :key="i">-->
-<!--										<router-link :to="'/article/t/'+vo2.id" :class="{active:vo2.an}">{{vo2.name}}</router-link>-->
-<!--									</li>-->
-<!--								</ul>-->
-<!--							</li>-->
-<!--						</ul>-->
-<!--					</div>-->
-
-<!--					<div class="article-key article-r">-->
-<!--						<div class="title"><h1 class="l">热门标签</h1> <router-link class="r" to="/">>更多</router-link></div>-->
-<!--						<div class="content">-->
-<!--							<router-link v-for="vo,i in init.keys"  to="/" :key="i"><el-tag v-text="vo.name" :type="vo.color" :key="i"></el-tag></router-link>-->
-<!--						</div>-->
-<!--					</div>-->
-
-<!--					<div class="article-hot article-r">-->
-<!--						<div class="title"><h1 class="l">热门文章</h1> <router-link class="r" to="/">>更多</router-link></div>-->
-<!--						<div class="content">-->
-<!--							<ul>-->
-<!--								<li v-for="vo,i in hot" :key="i"> <router-link :to="'/content/'+vo.id">{{vo.title}}</router-link> <span class="r">{{vo.a}}</span></li>-->
-<!--							</ul>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</el-col>-->
 			</el-row>
 		</div>
 	</el-container>

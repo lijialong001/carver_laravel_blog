@@ -2,21 +2,22 @@
 	<el-container>
 		<div class="content" v-loading.fullscreen.lock="!show" element-loading-text="拼命加载中" element-loading-background="rgba(255, 255, 255, 0.5)" >
 			<div class="content-head mb20">
-				<h1 v-text="article.title"></h1>
+				<h1 v-text="article.article_title"></h1>
 			</div>
 			<div class="container background p20">
 
-				  	<div class="body" v-html="article.body"></div>
+				  	<div class="body" v-html="article.article_content"></div>
 
 				  	<div class="info">
 						<p>
-						所属分类: <a :href="'/article/t/'+article.type">{{article.typename}}</a> 发表时间: <span>{{article.time}}</span>
-							最后更新: <span>{{article.update}}</span> </p>
-						<p>浏览量: <span>{{a}}</span> TAG:
-						<el-tag v-for="vo,i in article.tag" size="mini" :key="i">{{vo}}</el-tag>
+<!--						所属分类: <a :href="'/article/t/'+article.type">{{article.typename}}</a> -->
+                            发表时间: <span>{{article.add_time}}</span>
+							最后更新: <span>{{article.update_time}}</span> </p>
+						<p>浏览量: <span>{{article.look_num}}</span>
+<!--                            TAG:<el-tag v-for="vo,i in article.tag" size="mini" :key="i">{{vo}}</el-tag>-->
 						</p>
 						<p class="warning">
-							本文标题: {{article.title}}<Br />
+							本文标题: {{article.article_title}}<Br />
 							本文链接: {{article.url}}<br />
 							版权声明: 若无特殊注明，本文皆为《 {{init.info.nick || init.info.name}} 》原创，转载请保留文章出处。
 
@@ -102,7 +103,7 @@
 			}
 
 			//人气
-			this.$emit("gets",{url:'/api/article/a.html?id='+id,success:function(e){self.a = e.data.a;}});
+			this.$emit("gets",{url:'/api/article/incLook?id='+id,success:function(e){self.a = e.data.a;}});
 
 		},
 		methods: {

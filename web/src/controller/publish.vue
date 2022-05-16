@@ -2,41 +2,67 @@
 
 	<el-container style="width: 100%;margin-bottom: 1000px">
 
-            <div class="userInfo" v-show="user.show">
-              <div class="form">
-                <h3>告诉我,你是谁? <i class="iconfont r pot" @click="user.show=false">&#xe611;</i></h3>
-                <el-form ref="form" label-width="80px">
-                  <el-form-item label="腾讯扣扣">
-                    <el-input v-model="user.qq" type="number" @change="getQqInfo($event)" placeholder="可使用QQ号实时获取昵称+头像"></el-input>
-                  </el-form-item>
-                  <el-form-item label="网名昵称">
-                    <el-input v-model="user.name" placeholder="就是你的网名"></el-input>
-                  </el-form-item>
-                  <el-form-item label="电子邮箱">
-                    <el-input v-model="user.email" type="email" placeholder="可以是QQ邮箱"></el-input>
-                  </el-form-item>
-                  <el-form-item label="博客网址">
-                    <el-input v-model="user.url" placeholder="可以是QQ空间/个人网站/Github"></el-input>
-                  </el-form-item>
-                  <el-form-item style="margin: 0">
-                    <el-button type="primary" style="width: 200px" @click="userPost" >确定无误</el-button>
-                  </el-form-item>
-                </el-form>
-              </div>
-            </div>
+<!--            <div class="userInfo" v-show="user.show">-->
+<!--              <div class="form">-->
+<!--                <h3>告诉我,你是谁? <i class="iconfont r pot" @click="user.show=false">&#xe611;</i></h3>-->
+<!--                <el-form ref="form" label-width="80px">-->
+<!--                  <el-form-item label="腾讯扣扣">-->
+<!--                    <el-input v-model="user.qq" type="number" @change="getQqInfo($event)" placeholder="可使用QQ号实时获取昵称+头像"></el-input>-->
+<!--                  </el-form-item>-->
+<!--                  <el-form-item label="网名昵称">-->
+<!--                    <el-input v-model="user.name" placeholder="就是你的网名"></el-input>-->
+<!--                  </el-form-item>-->
+<!--                  <el-form-item label="电子邮箱">-->
+<!--                    <el-input v-model="user.email" type="email" placeholder="可以是QQ邮箱"></el-input>-->
+<!--                  </el-form-item>-->
+<!--                  <el-form-item label="博客网址">-->
+<!--                    <el-input v-model="user.url" placeholder="可以是QQ空间/个人网站/Github"></el-input>-->
+<!--                  </el-form-item>-->
+<!--                  <el-form-item style="margin: 0">-->
+<!--                    <el-button type="primary" style="width: 200px" @click="userPost" >确定无误</el-button>-->
+<!--                  </el-form-item>-->
+<!--                </el-form>-->
+<!--              </div>-->
+<!--            </div>-->
 
         <div class="article_title" style="position: absolute;
             left: 50%;
-            top: 50%;
-            transform: translate(-50%, -150%);width: 90%;margin-top: 150px" >
+            top: 80%;
+            transform: translate(-50%, -150%);width: 90%;margin-top: 150px;height: 400px" >
             <div class="form">
                 <el-form ref="form" label-width="80px" :label-position="labelPosition">
                     <el-form-item label="文章标题:">
-                        <el-input v-model="user.qq" type="text" @change="getQqInfo($event)" placeholder="请输入文章标题"></el-input>
+                        <el-input v-model="article.article_title" type="text" placeholder="请输入文章标题"></el-input>
                     </el-form-item>
                     <el-form-item label="文章简介:">
-                        <el-input v-model="user.name" placeholder="请输入文章简介"></el-input>
+                        <el-input v-model="article.article_desc" placeholder="请输入文章简介"></el-input>
                     </el-form-item>
+                    <el-form-item label="文章封面:">
+<!--                        <el-upload-->
+<!--                            class="upload-demo"-->
+<!--                            ref="upload"-->
+<!--                            action="http://test.lijialong.site/api/uploadImg"-->
+<!--                            :on-preview="handlePreview"-->
+<!--                            :on-remove="handleRemove"-->
+<!--                            :file-list="fileList"-->
+<!--                            :auto-upload="false">-->
+<!--                            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>-->
+<!--                        </el-upload>-->
+
+                        <el-upload
+                            class="avatar-uploader"
+                            action=""
+                            :on-change="beforeAvatarUpload"
+                            :http-request="uploadImage"
+                            name="file"
+                            :show-file-list="false"
+                            :on-success="handleAvatarSuccess">
+                            <img v-if="bannerRuleForm.imageUrl" style="width: 100px;height: 100px" :src="bannerRuleForm.imageUrl" class="avatar" />
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+
+                    </el-form-item>
+
                 </el-form>
             </div>
         </div>
@@ -47,7 +73,7 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -150%);
-            background: green;margin-bottom: 2000px;margin-top: 800px" v-loading.fullscreen.lock="!show" element-loading-text="拼命加载中" element-loading-background="rgba(255, 255, 255, 0.5)">
+            background: green;margin-bottom: 2000px;margin-top: 900px" v-loading.fullscreen.lock="!show" element-loading-text="拼命加载中" element-loading-background="rgba(255, 255, 255, 0.5)">
             <div class="leave">
                 <!--DIV输入框-->
                 <div class="editor" v-html="content" @keyup="setContent($event)" contenteditable></div>
@@ -74,7 +100,7 @@
 		props: ['init'],
 		data() {
 			return {
-                show:false,
+                show:true,
                 page:{
                   count:0,
                   size:10
@@ -95,24 +121,82 @@
                   show:false,
                   pid:""
                 },
+                article:{
+                    article_title:'',
+                    article_desc:''
+                },
                 labelPosition: 'top',
                 formLabelAlign: {
                     name: '',
                     region: '',
                     type: ''
+                },
+                bannerRuleForm:{
+                    imageUrl:'',
+                    imageTempUrl:''
                 }
 			}
 		},
 		created() {
-		        for(var i=1;i<=74;i++){
-                    this.qqbq.push(i);
-                }
+		        // for(var i=1;i<=74;i++){
+                //     this.qqbq.push(i);
+                // }
                 this.$emit("SetHeader", true);
                 this.$emit("SetScrollTop");
-                sessionStorage['title'] = document.title = "留言 - "+(this.init.info.nick || this.init.info.name)+ "的博客"
-                this.getPage(1);
+                sessionStorage['title'] = document.title = "发布文章 - "+(this.init.info.nick || this.init.info.name)+ "的博客"
+                // this.getPage(1);
 		},
 		methods: {
+
+            //上传文件之前的验证
+            beforeAvatarUpload(file) {
+
+                var img_type=['image/jpeg','image/png'];
+                var isJPG=img_type.indexOf(file.raw.type)
+
+                const isLt2M = file.raw.size / 1024 / 1024 < 2;
+
+                if (isJPG===-1) {
+                    this.$message.error('上传图片只能是 jpg / png 格式!');
+                    return  ;
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传图片大小不能超过 2MB!');
+                    return ;
+                }
+                return isJPG && isLt2M;
+            },
+
+
+
+            //上传文件
+            uploadImage(item) {
+                var file = item.file;
+                let formData= new FormData();
+                formData.append('file',file)
+
+                this.$http({
+                    url: 'http://test.lijialong.site/api/uploadImg', //后端提供的接口
+                    method: 'post',
+                    data: formData,
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(({data}) => {
+
+                    this.bannerRuleForm.imageUrl = "http://test.lijialong.site/storage/" + data.filepath;
+                    this.bannerRuleForm.imageTempUrl=data.filepath;
+                    this.$message.success('上传成功～');
+                })
+            },
+
+            handleAvatarSuccess(res, file) {
+                console.log(res)
+
+                console.log(file)
+                // this.bannerRuleForm.imageUrl = URL.createObjectURL(file.raw);
+            },
+
           setContent:function($e){//模拟双向绑定
             this.content2 = $e.target.innerHTML;
             if(this.content2.length<=0){
@@ -216,90 +300,128 @@
              * 提交文章
              */
             postLeave:function () {
-            var self = this;
-            if(self.content2.length<10){
-              self.$message.error('留言内容不得少于10个字');
-              return;
-            }
-            if(!this.isUser()){
-              this.user.show = true;
-              return;
-            }
-            this.$emit("posts",{
-              url:'/api/leave/add.html',
-              data:{
-                content:this.content2,
-                qq:this.user.qq,
-                pid:this.pid
-              },
-              success:function(e){
-                self.showFACE = false;
-                if(e.status==200){
-                    if(e.data.code==1){
-                      self.content = "";
-                      self.content2 = "";
-                      self.pid = 0;
-                      self.$message.success("留言成功");
-                      sessionStorage['leave_1'] = "";
-                      self.getPage(1);
-                    }else{
-                      self.$message.error(e.data.msg);
-                    }
-                }else{
-                  self.$message.error('服务器异常 状态码' + e.status);
+
+                var self = this;
+
+
+                if(self.article.article_title.length===0){
+                    self.$message.error({
+                        message:'文章标题不得为空～',
+                        center:true
+                    });
+                    return;
                 }
-              },error:function(e){
-                self.$message.error('服务器异常');
-              }});
+
+                if(self.article.article_desc.length===0){
+                    self.$message.error({
+                        message:'文章简介不得为空～',
+                        center:true
+                    });
+                    return;
+                }
+
+                if(self.bannerRuleForm.imageUrl.length===0){
+                    self.$message.error({
+                        message:'文章封面不得为空～',
+                        center:true
+                    });
+                    return;
+                }
+
+                if(self.content2.length<10){
+                    self.$message.error({
+                        message:'文章内容不得少于10个字～',
+                        center:true
+                    });
+                    return;
+                }
+
+                this.$emit("posts",{
+                  url:'/api/article/publish',
+                  data:{
+                    article_content:this.content2,
+                    article_title:this.article.article_title,
+                      article_desc:this.article.article_desc,
+                      article_img:this.bannerRuleForm.imageTempUrl
+                  },
+                  success:function(e){
+                    self.showFACE = false;
+                    if(e.data.status==200){
+                        if(e.data.data.code==1){
+                          self.article_content = "";
+                          self.content2 = "";
+                          self.bannerRuleForm.imageUrl='';
+                          self.$message.success({
+                              message:"文章发布成功～",
+                              center:true
+                          });
+                            window.location.href='/article';
+                          // sessionStorage['leave_1'] = "";
+                          // self.getPage(1);
+                        }else{
+                          self.$message.error({
+                              message:e.data.data.msg,
+                              center:true
+                          });
+                        }
+                    }else{
+                      self.$message.error({
+                          message:'服务器异常 状态码' + e.data.status,
+                          center:true
+                      });
+                    }
+                  },error:function(e){
+                    self.$message.error({
+                        message:'服务器异常',
+                        center:true
+                    });
+                  }});
 
           },
 
-            /**
-             * @desc 验证填写的用户信息
-             * @returns {boolean}
-             */
-              isUser:function () {
-                if(this.user.name.length>0 && this.user.qq.length>0 &&  this.user.email.length>0 && this.user.url.length>0){
-                  return true;
-                }else{
-                  return false;
-                }
-              },
+              //验证填写的用户信息
+              // isUser:function () {
+              //   if(this.user.name.length>0 && this.user.qq.length>0 &&  this.user.email.length>0 && this.user.url.length>0){
+              //     return true;
+              //   }else{
+              //     return false;
+              //   }
+              // },
 
 
-            /**
-             * @desc 提交用户信息并且添加对应的文章
-             */
-              userPost:function(){
-                if(!this.isUser()){
-                  this.$message.error('信息未填写完整');
-                  return;
-                }
-                this.$emit("posts",{
-                  url:'/api/user/add.html',
-                  data:{
-                    qq:this.user.qq,
-                    name:this.user.name,
-                    email:this.user.email,
-                    url:this.user.url,
-                  }});
+              //添加用户信息并提交文章【停用】
+              // userPost:function(){
+              //   if(!this.isUser()){
+              //     this.$message.error('信息未填写完整');
+              //     return;
+              //   }
+              //   this.$emit("posts",{
+              //     url:'/api/user/add.html',
+              //     data:{
+              //       qq:this.user.qq,
+              //       name:this.user.name,
+              //       email:this.user.email,
+              //       url:this.user.url,
+              //     }});
+              //
+              //   this.user.show = false;
+              //   this.postLeave();
+              //
+              // },
 
-                this.user.show = false;
-                this.postLeave();
 
-              },
-
-              getQqInfo:function(e){
-                var self = this;
-                this.$emit("gets",{
-                  url:'/api/user/qqinfo.html?qq='+e,
-                  success:function (e) {
-                    self.user.name = e.data.name;
-                    self.user.email = e.data.email;
-                    self.user.url = e.data.url;
-                  }
-                });
-              },
+                //获取QQ信息 【停用】
+              // getQqInfo:function(e){
+              //   var self = this;
+              //   this.$emit("gets",{
+              //     url:'/api/user/qqinfo.html?qq='+e,
+              //     success:function (e) {
+              //       self.user.name = e.data.name;
+              //       self.user.email = e.data.email;
+              //       self.user.url = e.data.url;
+              //     }
+              //   });
+              // },
 
               getPage(p) { //切换页面
                 var self = this;

@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        parent::_initialize();
+    }
     /**
      * @return mixed
      * @desc 用户登录
@@ -20,25 +24,19 @@ class UserController extends Controller
             $returnJson['data']['msg']='';
             if(empty($data['account']) || empty($data['pwd'])){
                 DB::rollBack();
-                $returnJson['status']=500;
-                $returnJson['data']['msg']='账号或密码不能为空～';
-                return $returnJson;
+                return returnJson(500,'账号或密码不能为空～',0);
             }
             //验证账号是否存在
             $userInfo=DB::table("carver_user")->where(['user_account'=>$data['account']])->first();
             if(!$userInfo){
                 DB::rollBack();
-                $returnJson['status']=500;
-                $returnJson['data']['msg']='账号不存在～';
-                return $returnJson;
+                return returnJson(500,'账号不存在～',0);
             }
 
             //账号是否被锁定🔒
             if($userInfo->is_lock){
                 DB::rollBack();
-                $returnJson['status']=500;
-                $returnJson['data']['msg']='你的账号已经被锁定～';
-                return $returnJson;
+                return returnJson(500,'你的账号已经被锁定～',0);
             }
 
             //$userData=password_hash($userInfo['user_pwd'], PASSWORD_DEFAULT);
@@ -46,26 +44,18 @@ class UserController extends Controller
             $userVeryPwd=password_verify($data['pwd'],$userInfo->user_pwd);
             if(!$userVeryPwd){
                 DB::rollBack();
-                $returnJson['status']=500;
-                $returnJson['data']['msg']='密码不正确～';
-                return $returnJson;
+                return returnJson(500,'密码不正确～',0);
             }
 
             $upUserInfo['ip']=$request->ip();
-            $upUserInfo['country']=$this->ipForCountry($request->ip())['country'];
+            $upUserInfo['country']=ipForCountry($request->ip())['country'];
             DB::table("carver_user")->where("id",$userInfo->id)->update($upUserInfo);
             DB::commit();
-            $returnJson['data']=$data;
-            $returnJson['data']['code']=1;
-            $returnJson['status']=200;
-            return $returnJson;
+            return returnJson(200,'',1,$data);
 
 
         }catch (\Exception $e){
-            $returnJson['data']['code']=0;
-            $returnJson['status']=500;
-            $returnJson['data']['msg']='系统错误～';
-            return $returnJson;
+            return returnJson(500,'系统错误～',0);
         }
 
     }
