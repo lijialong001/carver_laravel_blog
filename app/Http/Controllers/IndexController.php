@@ -45,7 +45,7 @@ class IndexController extends Controller
                     $data['filepath']='';
                 }
                 $data['status']=200;
-                $data['filepath']=$filename;
+                $data['filepath']="http://".$_SERVER['HTTP_HOST']."/storage/".$filename;
 
                 return $data;
 

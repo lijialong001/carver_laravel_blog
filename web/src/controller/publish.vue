@@ -56,11 +56,10 @@
                             :http-request="uploadImage"
                             name="file"
                             :show-file-list="false"
-                            :on-success="handleAvatarSuccess">
+                            >
                             <img v-if="bannerRuleForm.imageUrl" style="width: 100px;height: 100px" :src="bannerRuleForm.imageUrl" class="avatar" />
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
-
                     </el-form-item>
 
                 </el-form>
@@ -183,18 +182,11 @@
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(({data}) => {
-
-                    this.bannerRuleForm.imageUrl = "http://test.lijialong.site/storage/" + data.filepath;
+                    sessionStorage.clear();
+                    this.bannerRuleForm.imageUrl =data.filepath;
                     this.bannerRuleForm.imageTempUrl=data.filepath;
                     this.$message.success('上传成功～');
                 })
-            },
-
-            handleAvatarSuccess(res, file) {
-                console.log(res)
-
-                console.log(file)
-                // this.bannerRuleForm.imageUrl = URL.createObjectURL(file.raw);
             },
 
           setContent:function($e){//模拟双向绑定
