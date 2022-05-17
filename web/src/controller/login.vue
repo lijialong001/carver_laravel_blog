@@ -14,7 +14,7 @@
                 <div v-if="user.login==='false'" class="loginbtn">
                     <div class="index-btnss">
                         <!--用户登录-->
-                        <el-form ref="form"  label-width="200px">
+                        <el-form ref="form">
                             <el-form-item label="用户名">
                                 <el-input  type="text" v-model="user.account" placeholder="请输入您的账号哦" ></el-input>
                             </el-form-item>
@@ -33,7 +33,7 @@
 
                     <div class="index-btnss registerbtn" style="display: none">
                         <!--用户注册-->
-                        <el-form ref="form"  label-width="200px">
+                        <el-form ref="form">
                             <el-form-item label="手机号">
                                 <el-input  type="text" v-model="user.account" placeholder="请输入您的手机号" ></el-input>
                             </el-form-item>
@@ -152,7 +152,6 @@ export default {
         userRegister:function (){
             document.querySelector(".container-index .registerbtn").style.display='block';
             document.querySelector(".container-index .loginbtn").style.display='none';
-
         },
         //忘记密码
         userForget:function (){
@@ -165,6 +164,14 @@ export default {
         goLogin:function (){
             document.querySelector(".container-index .registerbtn").style.display='none';
             document.querySelector(".container-index .loginbtn").style.display='block';
+            // var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+            //     isIphone = ipad || ua.match(/(iPhone\sOS)\s([\d_]+)/),
+            //     isAndroid = ua.match(/(Android)\s+([\d.]+)/),
+            //     isMobile = isIphone || isAndroid;
+            // if(isMobile){
+            //     // this.loading = "请使用电脑访问~"
+            //     document.querySelector(".container-index .index-btnss").style.marginLeft='-130px';
+            // }
         },
         doRegister:function (e){
 
