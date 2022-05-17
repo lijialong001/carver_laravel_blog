@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('api/login',[\App\Http\Controllers\UserController::class,'login']);
+Route::any('api/register',[\App\Http\Controllers\UserController::class,'register']);
 Route::get('api/index',[\App\Http\Controllers\IndexController::class,'index']);
 Route::get('api/article',[\App\Http\Controllers\ArticleController::class,'index']);
 Route::get('api/experiment',[\App\Http\Controllers\ArticleController::class,'experiment']);

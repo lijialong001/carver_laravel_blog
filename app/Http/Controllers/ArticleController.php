@@ -21,15 +21,14 @@ class ArticleController extends Controller
         $request=\request()->input();
         $offset = $request["p"]??1;
 
-        $count =DB::table("carver_article")->count();
+        $count =DB::table("carver_article")->where("uid",$request['uid'])->count();
 
-        $list = DB::table("carver_article")->orderByDesc("id")->forPage($offset,10)->get();
+        $list = DB::table("carver_article")->where("uid",$request['uid'])->orderByDesc("id")->forPage($offset,10)->get();
 
         if($list){
             $list=$list->toarray();
         }
-
-        $imgUrl=substr($this->apiUrl,0,strripos(trim($this->apiUrl,"/"),"/"));
+        
         for($i=0;$i<count($list);$i++){
 
             $list[$i]->article_img = "http://".$_SERVER['HTTP_HOST']."/storage/".$list[$i]->article_img;

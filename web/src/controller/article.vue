@@ -90,7 +90,7 @@
 				var self = this;
 				self.show = false;
 				var name = 'article_'+this.t+'_'+p;
-                this.$emit("gets",{url:'/api/article?t='+this.t+'&p='+p,success:function(e){
+                this.$emit("gets",{url:'/api/article?t='+this.t+'&p='+p+"&uid="+sessionStorage.uid,success:function(e){
 
                     if(sessionStorage.login==='true'){
                         if(e.status==200){
