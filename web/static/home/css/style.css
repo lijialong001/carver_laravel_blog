@@ -218,7 +218,7 @@ div.title a {
 .background-fixed {
 	width: 100%;
 	height: 800px;
-	background: url(/static/home/img/bj4.jpg);
+	background: url(/static/home/img/body4.jpeg);
 	background-size: cover;
 	background-position: center;
 	position: relative;
@@ -311,14 +311,17 @@ div.title a {
 }
 
 .container-body {
-    position: relative;
-	/*width: 1000px;*/
-	/*margin: auto;*/
+    /*position: relative;*/
+	width: 1000px;
+	margin: auto;
 	text-align: center;
     /*margin-top: 200px;*/
 	/*padding: 400px 0;*/
 }
 
+.container-body h1 {
+    margin-top: 60px;
+}
 .container-body h2 {
 	color: #333;
 }

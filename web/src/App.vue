@@ -2,7 +2,7 @@
 	<div id="app"
 		v-loading.fullscreen.lock="!show"
 		:element-loading-text="loading"
-		element-loading-background="rgba(0, 0, 0, 0.5)"
+		element-loading-background="rgba(0, 0, 0, 0.1)"
 		@click="floating">
 
 		<!--头部-->

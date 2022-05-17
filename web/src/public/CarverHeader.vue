@@ -120,10 +120,12 @@ export default {
 				this.nav[i].an = !this.nav[i].an;
 			},
 			//获取高度并且交给返回顶部与导航切换
+
 			handleScroll:function(){
 				var Top = document.body.scrollTop || document.documentElement.scrollTop;
 				this.$emit("scrollTop",Top);
-				if(this.$route.path=="/"){
+
+				if(this.$route.path=="/" || this.$route.path=="/login"){
 					if(Top>640){
 						this.$emit("SetHeader",true);
 					}else{
