@@ -1,64 +1,79 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+后台配置：
+**配置&安装** 
+/application/database.php 配置数据库
+/public 项目入口
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+ **使用composer安装所有依赖包** 
+`composer install`
 
-## About Laravel
+nginx 伪静态规则
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+location / {
+    if (!-e $request_filename){
+	rewrite  ^(.*)$  /index.php?s=$1  last;   break;
+    }
+}
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+前台说明：
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- 前台基于 Vue.js + element-ui 开发 由 vue-cli webpack 编译
+- 
+- 前台文件在/web 目录下
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+核心文件 (之外的可选文件)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- /src
+- /static
+- /index.html
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+开发前请安装node.js 并运行以下命令安装vue以及依赖
+$ npm i vue -g
+$ npm i vue-cli -g
+$ vue init webpack
+    输入y 回车
+    输入项目名称 如 app 回车
+    再次回车
+    输入作者 如 carver_laravel_blog 回车
+    回车 输入y 回车
+    输入n 回车
+    输入n 回车
+    输入n 回车
+    选择第三项 No, I will handle that myself
 
-## Contributing
+$ npm i element-ui
+# 安装依赖包资源较大,建议使用淘宝NPM国内镜像 详情请进 http://npm.taobao.org/
+$ npm i
+如何调试
+先配置api根地址
+在 /src/App.vue 文件中 内附注释
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+$ npm run dev
+# 浏览器打开 http://127.0.0.1:8080 即可看到实时界面
+如何编译
+$ npm run build
+# 编译后,文件会存放到 /dist/下
+编译注意事项
+如果重新始初化webpack的话 资源文件打包路径会有错
+将可选文件夹 /dist /config /build 复盖您的webpack
 
-## Code of Conduct
+如何布暑
+建议前后端分为两个站点
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+前台 www.xxx.com
 
-## Security Vulnerabilities
+后台 api.xxx.com
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+前端打包后,将/dist/ 下的 文件 放到www.xxx.com 站点下
 
-## License
+后台将文件放到api.xxx.com 下即可
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+
