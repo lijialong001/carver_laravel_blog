@@ -137,6 +137,7 @@
 			}
 		},
 		created() {
+                
 		        // for(var i=1;i<=74;i++){
                 //     this.qqbq.push(i);
                 // }
@@ -327,6 +328,7 @@
                     });
                     return;
                 }
+
 
                 this.$emit("posts",{
                   url:'/api/article/publish',

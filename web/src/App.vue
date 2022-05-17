@@ -99,31 +99,45 @@
       }
 
 
-      //初始化本地的缓存数据【存在缓存】
-      if(sessionStorage.init && sessionStorage.init !=="\"\""){
-          console.log("开始读取缓存")
-        setTimeout(function () {
-          self.show = true; //重新加载,延时一秒
-        },1000)
-          self.init = JSON.parse(sessionStorage.init);
+      //初始化本地的缓存数据【存在缓存】生产环境禁止读取缓存
+      // if(sessionStorage.init && sessionStorage.init !=="\"\""){
+      //     console.log("开始读取缓存")
+      //   setTimeout(function () {
+      //     self.show = true; //重新加载,延时一秒
+      //   },1000)
+      //     self.init = JSON.parse(sessionStorage.init);
+      //
+      // }else{
+      //     //加载初始数据【不存在缓存】
+      //     this.gets({url:'/api/index',success:function(e){
+      //               console.log("缓存存储完毕")
+		// 			if(e.status==200){
+		// 				self.show = true;
+		// 				self.init = e.data;
+		// 				sessionStorage.init = JSON.stringify(e.data);//保存一份到缓存
+      //
+		// 			}else{
+		// 				self.$message.error('服务器异常~');
+		// 			}
+		// 		},error:function(e){
+      //         console.log("服务器异常~")
+		// 			self.$message.error('服务器异常~');
+		// 		}});
+      // }
 
-      }else{
-          //加载初始数据【不存在缓存】
-          this.gets({url:'/api/index',success:function(e){
-                    console.log("缓存存储完毕")
-					if(e.status==200){
-						self.show = true;
-						self.init = e.data;
-						sessionStorage.init = JSON.stringify(e.data);//保存一份到缓存
 
-					}else{
-						self.$message.error('服务器异常~');
-					}
-				},error:function(e){
-              console.log("服务器异常~")
-					self.$message.error('服务器异常~');
-				}});
-      }
+            this.gets({url:'/api/index',success:function(e){
+                    if(e.status==200){
+                        self.show = true;
+                        self.init = e.data;
+
+                    }else{
+                        self.$message.error('服务器异常~');
+                    }
+                },error:function(e){
+                    console.log("服务器异常~")
+                    self.$message.error('服务器异常~');
+                }});
 
 			//切换浏览器标签 切换标题
 			var hiddenProperty = 'hidden' in document ? 'hidden' :

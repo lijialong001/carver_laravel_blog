@@ -124,7 +124,6 @@ export default {
                                 type: 'success'
                             });
                             sessionStorage.login=true;
-                            sessionStorage.alluserinfo=JSON.stringify(e.data);
                             window.location.href='/';
                         }else{
                             _self.$message.error(e.data.data.msg);

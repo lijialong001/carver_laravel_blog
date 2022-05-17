@@ -90,25 +90,26 @@
 				var self = this;
 				self.show = false;
 				var name = 'article_'+this.t+'_'+p;
-				if (sessionStorage[name]){
-					var data  = JSON.parse(sessionStorage[name]);
-					self.show = true;
-					self.list = data.data;
-					self.hot = data.hot;
-					self.page.count = data.count;
-				}else{
-					this.$emit("gets",{url:'/api/article?t='+this.t+'&p='+p,success:function(e){
-						if(e.status==200){
-							self.show = true;
-							self.list = e.data.data;
-							self.hot = e.data.hot;
-							self.page.count = e.data.count;
-							sessionStorage[name] = JSON.stringify(e.data);
-						}
-					},error:function(e){
-						self.$message.error('服务器异常～');
-					}});
-				}
+                this.$emit("gets",{url:'/api/article?t='+this.t+'&p='+p,success:function(e){
+
+                    if(sessionStorage.login==='true'){
+                        if(e.status==200){
+                            self.show = true;
+                            self.list = e.data.data;
+                            self.hot = e.data.hot;
+                            self.page.count = e.data.count;
+                        }
+                    }else{
+                        self.show = true;
+                        self.$message.error({
+                            message:'请先登录～',
+                            center:true
+                        });
+                    }
+
+                    },error:function(e){
+                        self.$message.error('服务器异常～');
+                    }});
 			}
 		}
 	}
