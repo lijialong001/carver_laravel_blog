@@ -28,7 +28,7 @@ class ArticleController extends Controller
         if($list){
             $list=$list->toarray();
         }
-        
+
         for($i=0;$i<count($list);$i++){
 
             $list[$i]->article_img = "http://".$_SERVER['HTTP_HOST']."/storage/".$list[$i]->article_img;
