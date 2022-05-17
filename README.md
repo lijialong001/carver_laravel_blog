@@ -1,11 +1,12 @@
  **后台配置：** 
 
- **/application/database.php 配置数据库
-/public 项目入口** 
+/application/database.php 配置数据库
 
- **使用composer安装所有依赖包** 
+/public 项目入口
 
-`composer install`
+ 使用composer安装所有依赖包
+
+```composer install```
 
  **nginx 伪静态规则** 
 
