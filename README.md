@@ -4,6 +4,7 @@
 /public 项目入口** 
 
  **使用composer安装所有依赖包** 
+
 `composer install`
 
  **nginx 伪静态规则** 
@@ -61,12 +62,13 @@ npm i
 先配置api根地址
 在 /src/App.vue 文件中 内附注释
 
-npm run dev
+`npm run dev`
 
 浏览器打开 http://127.0.0.1:8080 即可看到实时界面
 
 如何编译
-npm run build
+
+`npm run build`
 
 编译后,文件会存放到 /dist/下
 
