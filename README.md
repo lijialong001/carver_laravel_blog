@@ -89,6 +89,25 @@ npm i
 
 后台将文件放到 api.xxx.com 下即可
 
+ **打包部署上线如果只能访问首页，其他的路由访问404的情况，需要进行以下操作：** 
+
+方法一：
+修改src/router/index.js文件中的mode属性，设置为hash。（这种调整，会使url出现"#"）
+
+方法二：
+调整nginx.conf配置文件（添加对应的伪静态），直接访问静态页
+
+
+```
+location / {
+  if (!-e $request_filename) {
+    rewrite  ^(.*)$ /index.html?s=/$1  last;
+    break;
+  }
+}
+```
+
+
 
 
 
