@@ -3,7 +3,7 @@
 		<!--fixed-->
 		<div class="background-fixed">
 			<div class="blog-container">
-				<h1 class="blog-name">{{init.info.nick || init.info.name}}<p style="font-size: 16px; color:#666">懂得放下～</p></h1>
+				<h1 class="blog-name">{{typeof init.info.nick!=="undefined"?'': init.info.nick|| init.info.name}}<p style="font-size: 16px; color:#666">懂得放下～</p></h1>
 				<p class="blog-description" v-html="init.info.desc"> </p>
 				<div class="index-btns">
 <!--					<a target="_blank" :href="init.info.github" class="index-btns-btn">-->
@@ -50,7 +50,7 @@
 		<!--关于我-->
 		<div class="container-about">
 			<h1>欢迎使用Carver交流平台</h1>
-			<span>欢迎 {{init.info.nick}} ~</span>
+			<span>欢迎 {{init.info.nick?init.info.nick:''}} ~</span>
 
 		</div>
 	</div>

@@ -5,8 +5,8 @@
 			<div class="main">
 				<el-row :gutter="20">
 					<el-col :span="12">
-						<h2>{{init.info.nick || init.info.name}}</h2>
-						<p v-html="init.info.desc"></p>
+						<h2>{{typeof init.info.nick!=="undefined"?init.info.nick:'' || init.info.name}}</h2>
+						<p v-html="init.info.desc"></p>  
 					</el-col>
 					<el-col :span="8">
 						<h2>相关链接</h2>

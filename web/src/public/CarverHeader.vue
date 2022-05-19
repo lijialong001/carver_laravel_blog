@@ -8,7 +8,7 @@
                     <div class="grid-content bg-purple">
                         <el-tabs @tab-click="handleClick" >
 
-                            <el-tab-pane :label="vo.name" :redirecturl="vo.url" v-for="vo,i in nav" @mouseenter="onAn(i)" @mouseleave="onAn(i)" :class="{ active: active(vo.url) }">
+                            <el-tab-pane :label="vo.name" :redirecturl="vo.url" v-for="vo,i in nav" :key="i" @mouseenter="onAn(i)" @mouseleave="onAn(i)" :class="{ active: active(vo.url) }">
                             </el-tab-pane>
 
                         </el-tabs>

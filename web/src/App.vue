@@ -36,7 +36,7 @@
 	export default {
 		data() {
 			return {
-				host: "http://api.blog.lijialong.site", //api后台接口
+				host: "http://api.carver.lijialong.site", //api后台接口
 				show: false, //显示页面
                 loading:"数据拼命加载中...",
 				ShowHeader: false, //导航切换
@@ -92,38 +92,12 @@
 	  var self = this;
 
       //api根地址
-      if(document.domain=="127.0.0.1" || document.domain=="blog.lijialong.site"){ //webpack环境下
-        this.host = "http://api.blog.lijialong.site";
+      if(document.domain=="127.0.0.1"){ //webpack环境下
+        this.host = "http://api.carver.lijialong.site";
       }else{
-        this.host = "http://test.lijialong.site"; //正式上线
+          console.log(document.domain)
+        this.host = "http://api.carver.lijialong.site"; //正式上线
       }
-
-
-      //初始化本地的缓存数据【存在缓存】生产环境禁止读取缓存
-      // if(sessionStorage.init && sessionStorage.init !=="\"\""){
-      //     console.log("开始读取缓存")
-      //   setTimeout(function () {
-      //     self.show = true; //重新加载,延时一秒
-      //   },1000)
-      //     self.init = JSON.parse(sessionStorage.init);
-      //
-      // }else{
-      //     //加载初始数据【不存在缓存】
-      //     this.gets({url:'/api/index',success:function(e){
-      //               console.log("缓存存储完毕")
-		// 			if(e.status==200){
-		// 				self.show = true;
-		// 				self.init = e.data;
-		// 				sessionStorage.init = JSON.stringify(e.data);//保存一份到缓存
-      //
-		// 			}else{
-		// 				self.$message.error('服务器异常~');
-		// 			}
-		// 		},error:function(e){
-      //         console.log("服务器异常~")
-		// 			self.$message.error('服务器异常~');
-		// 		}});
-      // }
 
 
             this.gets({url:'/api/index',success:function(e){

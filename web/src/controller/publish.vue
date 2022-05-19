@@ -38,17 +38,6 @@
                         <el-input v-model="article.article_desc" placeholder="请输入文章简介"></el-input>
                     </el-form-item>
                     <el-form-item label="文章封面:">
-<!--                        <el-upload-->
-<!--                            class="upload-demo"-->
-<!--                            ref="upload"-->
-<!--                            action="http://test.lijialong.site/api/uploadImg"-->
-<!--                            :on-preview="handlePreview"-->
-<!--                            :on-remove="handleRemove"-->
-<!--                            :file-list="fileList"-->
-<!--                            :auto-upload="false">-->
-<!--                            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>-->
-<!--                        </el-upload>-->
-
                         <el-upload
                             class="avatar-uploader"
                             action=""
@@ -176,7 +165,7 @@
                 formData.append('file',file)
 
                 this.$http({
-                    url: 'http://test.lijialong.site/api/uploadImg', //后端提供的接口
+                    url: 'http://api.carver.lijialong.site/api/uploadImg', //后端提供的接口
                     method: 'post',
                     data: formData,
                     headers: {

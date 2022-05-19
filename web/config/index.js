@@ -9,13 +9,8 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
     proxyTable: {
-        // '/api': {
-        //     target: 'http://test.lijialong.site',
-        //     changeOrigin: true,
-        //     pathRewrite: { '^/api': '/api' },
-        // },
     },
 
     // Various Dev Server settings

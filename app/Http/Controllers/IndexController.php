@@ -13,7 +13,7 @@ class IndexController extends Controller
     }
 
     public function index() {
-        $indexData=curlRequest($this->apiUrl."index");
+        $indexData=curlRequest("http://api.blog.lijialong.site/api/index");
         $result=json_decode($indexData,true);
         return $result;
     }
