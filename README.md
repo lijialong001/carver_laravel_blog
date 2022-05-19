@@ -8,7 +8,7 @@
 
 ```composer install```
 
- **nginx 伪静态规则** 
+ **4. nginx 伪静态规则** 
 
 ```
 
