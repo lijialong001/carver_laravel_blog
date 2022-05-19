@@ -109,6 +109,7 @@
                   show:false,
                   pid:""
                 },
+		uid:sessionStorage.uid,
                 article:{
                     article_title:'',
                     article_desc:''
@@ -319,13 +320,16 @@
                 }
 
 
+
                 this.$emit("posts",{
                   url:'/api/article/publish',
                   data:{
-                    article_content:this.content2,
-                    article_title:this.article.article_title,
+                      user_id:this.uid,
+                      article_content:this.content2,
+                      article_title:this.article.article_title,
                       article_desc:this.article.article_desc,
-                      article_img:this.bannerRuleForm.imageTempUrl
+                      article_img:this.bannerRuleForm.imageTempUrl,
+		                
                   },
                   success:function(e){
                     self.showFACE = false;

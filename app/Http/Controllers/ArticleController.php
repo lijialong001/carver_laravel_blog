@@ -97,11 +97,18 @@ class ArticleController extends Controller
         try {
             DB::beginTransaction();
             $params=\request()->input();
+            if(empty($params['user_id'])){
+                $returnJson['data']['code']=0;
+                $returnJson['status']=500;
+                $returnJson['data']['msg']="系统错误～";
+                return $returnJson;
+            }
             $articleInfo['article_title']=$params['article_title'];
             $articleInfo['article_desc']=$params['article_desc'];
             $articleInfo['article_content']=$params['article_content'];
             $articleInfo['article_img']=$params['article_img'];
             $articleInfo['ip']=\request()->ip();;
+            $articleInfo['uid']=$params['user_id'];
             $articleInfo['add_time']=time();
             $addArticle=DB::table("carver_article")->insert($articleInfo);
 
