@@ -31,7 +31,7 @@ class ArticleController extends Controller
 
         for($i=0;$i<count($list);$i++){
 
-            $list[$i]->article_img = "http://".$_SERVER['HTTP_HOST']."/storage/".$list[$i]->article_img;
+            $list[$i]->article_img =$list[$i]->article_img;
             $list[$i]->article_content = substr(html2text($list[$i]->article_content??''),0,250);
             $list[$i]->add_time = date("Y-m-d",(string)$list[$i]->add_time);
         }
