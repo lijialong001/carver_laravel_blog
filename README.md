@@ -1,10 +1,10 @@
- **后台配置：** 
+ **第一步：后台配置：** 
 
-/application/database.php 配置数据库
+ **1. /application/database.php 配置数据库** 
 
-/public 项目入口
+ **2. /public 项目入口** 
 
- 使用composer安装所有依赖包
+ **3. 使用composer安装所有依赖包** 
 
 ```composer install```
 
@@ -19,7 +19,7 @@ location / {
 }
 ```
 
- **前台配置：** 
+ **第二步：前台配置：** 
 
 
 - 前台基于 Vue.js + element-ui 开发 由 vue-cli webpack 编译
@@ -33,7 +33,7 @@ location / {
 - /index.html
 
 
-开发前请安装node.js 并运行以下命令安装vue以及依赖
+ **1. 开发前请安装node.js 并运行以下命令安装vue以及依赖** 
 
 
 ```
@@ -58,16 +58,17 @@ npm i
 ```
 
 
-如何调试
+ **2. 如何调试** 
 
 先配置api根地址
+
 在 /src/App.vue 文件中 内附注释
 
 `npm run dev`
 
 浏览器打开 http://127.0.0.1:8080 即可看到实时界面
 
-如何编译
+ **3. 如何编译** 
 
 `npm run build`
 
@@ -78,7 +79,8 @@ npm i
 如果重新始初化webpack的话 资源文件打包路径会有错
 将可选文件夹 /dist /config /build 复盖您的webpack
 
-如何布暑
+ **4. 如何布暑** 
+
 建议前后端分为两个站点
 
 前台 www.xxx.com
@@ -89,13 +91,15 @@ npm i
 
 后台将文件放到 api.xxx.com 下即可
 
+ **5. 部署打包前台需要注意事项：** 
+
  **打包部署上线如果只能访问首页，其他的路由访问404的情况，需要进行以下操作：** 
 
-方法一：
+ **方法一：
 修改src/router/index.js文件中的mode属性，设置为hash。（这种调整，会使url出现"#"）
 
 方法二：
-调整nginx.conf配置文件（添加对应的伪静态），直接访问静态页
+调整nginx.conf配置文件（添加对应的伪静态），直接访问静态页** 
 
 
 ```
