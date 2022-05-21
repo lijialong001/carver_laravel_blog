@@ -173,7 +173,6 @@
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(({data}) => {
-                    sessionStorage.clear();
                     this.bannerRuleForm.imageUrl =data.filepath;
                     this.bannerRuleForm.imageTempUrl=data.filepath;
                     this.$message.success('上传成功～');
