@@ -16,12 +16,6 @@
 						<p>浏览量: <span>{{article.look_num}}</span>
 <!--                            TAG:<el-tag v-for="vo,i in article.tag" size="mini" :key="i">{{vo}}</el-tag>-->
 						</p>
-						<p class="warning">
-							本文标题: {{article.article_title}}<Br />
-							本文链接: {{article.url}}<br />
-							版权声明: 若无特殊注明，本文皆为《 {{init.info.nick || init.info.name}} 》原创，转载请保留文章出处。
-
-						</p>
 				  	</div>
 					<div class="share">
 						<a href="javascript:;" @click="onZan" title="点个赞"><i class="iconfont">&#xe652;</i>{{article.z}}</a>

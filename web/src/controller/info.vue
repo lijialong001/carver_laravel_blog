@@ -4,13 +4,13 @@
 			<el-row class="info">
 				<el-col :span="6" class="info-content p20  background">
 					<div class="title mb20">
-						<h1>博主资料</h1>
+						<h1>基本信息</h1>
 					</div>
 
 					<div class="text item">
 						<img width="100px" :src="init.info.head" />
 					</div>
-
+					
 					<div class="text mt10 item" v-html="init.info.desc">
 					</div>
 
@@ -36,37 +36,25 @@
 						故乡: <span>{{init.info.home_province}} - {{init.info.home_city}} - {{init.info.home_area}}</span>
 					</div>
 					<div class="text item">
-						所在地: <span>{{init.info.my_province}} - {{init.info.my_city}} - {{init.info.my_area}}</span>
-					</div>
-					<div class="text item">
 						邮箱: <span>{{init.info.email}}</span>
 					</div>
 					<div class="text item">
-						扣扣: <span>{{init.info.qq}}</span>
+						QQ: <span>{{init.info.qq}}</span>
 					</div>
 					<div class="text item">
 						微信: <span>{{init.info.wx}}</span>
 					</div>
-					<div class="text item">
-						个人博客: <span>{{init.info.url}}</span>
-					</div>
-					<div class="text item">
-						Github: <span>{{init.info.github}}</span>
-					</div>
-					<div class="text item">
-						Gitocs: <span>{{init.info.gitosc}}</span>
-					</div>
 				</el-col>
 				<el-col :span="18" class="p20  background">
 					<div class="title mb20">
-						<h1>专业技能</h1>
+						<h1>更多信息</h1>
 					</div>
 
 					<div class="skills">
-						<el-row v-for="vo,i in init.skills" :key="i">
-							<el-col :span="6">{{vo.name}}</el-col>
+						<el-row>
+							<el-col :span="6">我的收藏</el-col>
 							<el-col :span="18" class="">
-								<el-progress :percentage="vo.value"></el-progress>
+								暂未更多数据～
 							</el-col>
 						</el-row>
 					</div>

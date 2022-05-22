@@ -47,7 +47,7 @@
                             :show-file-list="false"
                             >
                             <img v-if="bannerRuleForm.imageUrl" style="width: 100px;height: 100px" :src="bannerRuleForm.imageUrl" class="avatar" />
-                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                            <i v-else class="el-icon-picture avatar-uploader-icon"></i>
                         </el-upload>
                     </el-form-item>
 
@@ -470,4 +470,21 @@
   margin-top: -395px;
   margin-left: 10px;
 }
+
+
+
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+  }
+
+
+
+
+
+
 </style>
