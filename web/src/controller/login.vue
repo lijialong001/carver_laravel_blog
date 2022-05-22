@@ -164,7 +164,7 @@ export default {
         //忘记密码
         userForget:function (){
             this.$message({
-                message: "暂时未开发该功能",
+                message: "暂时未开放该功能",
                 center: true,
                 type: 'warning'
             });
