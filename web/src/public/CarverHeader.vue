@@ -34,7 +34,9 @@
                                         <router-link to="/"    class="index-btns-btn">首页</router-link>
                                     </el-dropdown-item>
                                     <el-dropdown-item>
-                                        <router-link to="/info"   class="index-btns-btn">个人中心</router-link>
+					<div @click="selfInfo">
+					   个人中心
+					</div>
                                     </el-dropdown-item>
                                     <el-dropdown-item>
                                         <router-link to="/publish"    class="index-btns-btn">发布文章</router-link>
@@ -81,6 +83,16 @@ export default {
             },
 
 
+
+           //个人中心
+        selfInfo:function (){
+            this.$message({
+                message: "暂时未开发该功能",
+                center: true,
+                type: 'warning'
+            });
+        },
+            
             outLogin:function (e){
                 this.$confirm('此操作将注销登录, 是否继续?', '提示', {
                     confirmButtonText: '确定',
