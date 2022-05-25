@@ -25,7 +25,7 @@
 						<el-pagination background :page-size="page.size" @current-change="getPage" layout="prev, pager, next"  :total="page.count"> </el-pagination>
 					</div>
 
-					<el-alert v-show="list.length==0" title="没有更多数据" type="info" description=" " :closable="false" show-icon></el-alert>
+					<el-alert v-show="list.length==0" title="你还没有发布你的博客哦，快去登录后发布吧～" type="info" description=" " :closable="false" show-icon></el-alert>
 
 				</el-col>
 			</el-row>
