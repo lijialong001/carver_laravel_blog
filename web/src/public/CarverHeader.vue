@@ -25,7 +25,7 @@
                         <el-dropdown trigger="click" class="selfUser">
                           <span class="el-dropdown-link">
                               <span v-if="this.logins === 'true'">
-                                  {{this.init.info.nick}}
+                                  {{this.userName}}
                               </span>
                           </span>
                                 <el-dropdown-menu slot="dropdown">
@@ -66,6 +66,7 @@ export default {
 			return {
                 activeIndex: '1',
                 logins:sessionStorage.login?sessionStorage.login:'false',
+                userName:sessionStorage.username? sessionStorage.username:'请登录'
 			}
 		},
 		computed: {

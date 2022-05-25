@@ -133,6 +133,7 @@ export default {
                             });
                             sessionStorage.login=true;
                             sessionStorage.uid=e.data.data.data.uid;
+                            sessionStorage.username=e.data.data.data.account;
                             window.location.href='/';
                         }else{
                             _self.$message.error(e.data.data.msg);
