@@ -59,9 +59,10 @@ class ArticleController extends Controller
         $result = DB::table("carver_article")->where("id",$id)->first();
 
         $imgUrl=substr($this->apiUrl,0,strripos(trim($this->apiUrl,"/"),"/"));
+        $userUrl=$this->userUrl;
         $result->add_time = date("Y-m-d",(string)$result->add_time);
         $result->update_time = $result->update_time ? date("Y-m-d",(string)$result->update_time) : "从未更新";
-        $result->article_content = preg_replace('/src="/','src="'.$imgUrl.'/',$result->article_content);
+        $result->article_content = preg_replace('/src="/','src="'.$userUrl,$result->article_content);
         $result->url = $imgUrl."/content/".$id;
 
         $desc = substr(html2text($result->article_content),0,250);

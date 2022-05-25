@@ -11,9 +11,11 @@ use Illuminate\Support\Env;
 class Controller extends BaseController
 {
     protected $apiUrl='';
+    protected $userUrl='';
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public function _initialize(){
         $this->apiUrl=env("API_URL");
+        $this->userUrl=env("USER_URL");
     }
 
     public function index() {
