@@ -72,7 +72,7 @@
                     <!--显示表情--><i @click="setFACE" class="iconfont">&#xe659;</i>
                     <!--引用--><i @click="setREFER" class="iconfont">&#xe65d;</i>
                     <!--点击的所有表情--><ul v-show="showFACE" class="qqbq">
-                        <li v-for="i in qqbq" ><img @click="inpFACE(i)" :src="'../static/home/img/qqbq/'+i+'.gif'" /></li>
+                        <li v-for="i in qqbq" ><img @click="inpFACE(i)" :src="'static/home/img/qqbq/'+i+'.gif'" /></li>
                     </ul>
                     <!--上传图片--><i @click="setIMG" class="iconfont">&#xe791;</i>
                     <!--上传代码--><i @click="setCODE" class="iconfont">&#xe6b9;</i>
@@ -128,9 +128,9 @@
 		},
 		created() {
 
-		        // for(var i=1;i<=74;i++){
-                //     this.qqbq.push(i);
-                // }
+		        for(var i=1;i<=74;i++){
+                    this.qqbq.push(i);
+                }
                 this.$emit("SetHeader", true);
                 this.$emit("SetScrollTop");
                 sessionStorage['title'] = document.title = "发布文章 - "+(this.init.info.nick || this.init.info.name)+ "的博客"
@@ -230,9 +230,10 @@
 			 },
 
 
+              
               //表情
               inpFACE: function(i){
-                this.content = this.content2 = this.content2+"<img src=\"/static/home/img/qqbq/"+i+".gif\">";
+                this.content = this.content2 = this.content2+"<img src=\"static/home/img/qqbq/"+i+".gif\">";
               },
 
 
